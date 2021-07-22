@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
     <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
-    
+    <script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
 
     <style type="text/css">
     </style>
@@ -37,14 +37,16 @@
 
     var clients = [];
     
-     socket.on('connection', function(socket) {
-            clients.push(uid);
-        });
-    // clients.push(uid);
+    // socket.onopen('connection', function(socket) {
+    //          clients.push(uid);
+    //      });
+    
+    socket.onopen = function(event) {
+        clients.push(uid);
+    };
+
+     //clients.push(uid);
     tool.onMouseMove = function(event) { //http://paperjs.org/reference/tool/ path examples
-        // io.socket.on('connection', function(socket) {
-        //     clients.push(uid);
-        // });
         for (var i = 0; i < clients.length; i++) {
          path.add(event.point);
        // You may need to add code here if you want to pass any other information.
