@@ -25,9 +25,10 @@
     var canvas = document.getElementById('myCanvas');
     paper.setup(canvas);
     var tool = new paper.Tool();
-    var path = new paper.Path();
+    // var path = new paper.Path();
+    var path;
     var uid = Date.now() % 10000;
-    path.strokeColor = "red";
+    
 
     // getting the URL (you may want to use for Exercise 3)
     var url = window.location.href;
@@ -35,35 +36,54 @@
     var socket = new WebSocket(
         'ws://' + window.location.host + '/ws/draw');
 
-    var clients = [];
+    // var clients = [];
+    const tabs = new Map();
+    
     
     // socket.onopen('connection', function(socket) {
     //          clients.push(uid);
     //      });
     
-    socket.onopen = function(event) {
-        clients.push(uid);
-    };
 
-     //clients.push(uid);
-    tool.onMouseMove = function(event) { //http://paperjs.org/reference/tool/ path examples
-        for (var i = 0; i < clients.length; i++) {
-         path.add(event.point);
-       // You may need to add code here if you want to pass any other information.
-        socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + clients[i] + "}" );
+
+     
+    // tool.onMouseMove = function(event) { //http://paperjs.org/reference/tool/ path examples
+    //     // for (var i = 0; i < clients.length; i++) {
+    //      path.add(event.point);
+    //    // You may need to add code here if you want to pass any other information.
+    //     socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + "}" );
+    // // }
+    // }
+    
+
+    tool.onMouseDown = function(event) {
+        path = new paper.Path();
+        tabs.set(uid, path);
+        path.strokeColor = "red";
+
     }
+
+    tool.onMouseDrag = function(event) {
+        path.add(event.point);
+        socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + "}" );
     }
 
     socket.onmessage = function(receivedMessage) {
         var received = JSON.parse(receivedMessage.data);
         console.log("Received: " + JSON.stringify(received));
+        for (let [key, value] of tabs) {
+            if (key != received.uid) {
+                value.add(new paper.Point(received.x, received.y));
+            }
+        };
+    }
     //     clients.push(uid);
     //     for (var i = 0; i < clients.length; i++) {
     //         console.log(clients[i]);
     // }
         // You will probably want to add some code here to draw more lines.
         
-    }
+    
 
     socket.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
