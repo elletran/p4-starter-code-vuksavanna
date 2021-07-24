@@ -17,23 +17,11 @@
   </style>
 </head>
 <body>
-    <img src= "{% static 'draw/images/leftarrow.png' %}" style = "position: absolute; top: 15px; left: 40px; margin-top: 50px; margin-left: 10px;  mpadding: 8px; width: 70px; height: 70px;">
     <div class = "row text-center">
-        <div class = "col-12 text" style = "margin-top: 200px; color: #2f3d2e; font-size: 65px; font-weight: 600;">FRIENDSHIP JOURNAL</div>
+        <img src= "{% static 'draw/images/check.png' %}" style = "margin-top: 600px; margin-left: 368px; height: 260px; width: 260px;">
+        <div class = "col-12 text" style = "margin-top: 100px;font-size: 60px; font-weight: 700; color: #2f3d2e;">J O U R N A L <br> C O M P L E T E!</div>
     </div>
-    <div class = "row text-center">
-        <div class = "col-12 text" style = "margin-top: 20px; color: #396935; font-size: 25px; font-weight: 500;">Submit an activity reflection to grow your plant!</div>
-    </div>
-    <!-- text area citation: https://www.w3schools.com/tags/tag_textarea.asp -->
-    <form action="completejournal">
-        <textarea class = "text" style = "margin-left: 140px; border: 5px solid #2f3d2e;; color: #2f3d2e; padding: 40px; font-size: 30px; background-color: rgb(239, 255, 221); margin-top: 70px; width: 700px; height: 1000px; color: rgb(43, 43, 43)" id="w3review" name="w3review" rows="4" cols="50">
-Type your reflection...
-            </textarea>
-          <br><br>
-          <input onclick = "location.href = 'completejournal'" style = "margin-left: 140px; font-weight: 600; margin-top: 30px; width: 700px; height: 70px; font-size: 30px; color: white; background-color: #2f3d2e" class = "text" type="submit" value="SUBMIT">
 
-        </form>
-    </div>
 
     
   <!-- You may change the dimensions of this canvas -->
@@ -67,30 +55,6 @@ Type your reflection...
            }
            return hashcolor;
    }
- 
- 
-//   tool.onMouseMove = function(event) { //http://paperjs.org/reference/tool/ path examples
-//       path.strokeColor = getRandomColor(uid); 
-//       path.add(event.point);
-      
-    
-//       socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + "}" );
-//    }
- 
-
-//    socket.onmessage = function(receivedMessage) {
-//        var received = JSON.parse(receivedMessage.data);
-
-//        if (sizeLarge) {
-//            if (!tabs.has(received.uid)) {
-//                var remotePath = new paper.Path();
-//                tabs.set(received.uid, remotePath);
-//            }
-           
-//            tabs.get(received.uid).strokeColor = getRandomColor(received.uid);
-//            tabs.get(received.uid).add(new paper.Point(received.x, received.y));
-//        }
-//    }
  
     
    socket.onclose = function(e) {
