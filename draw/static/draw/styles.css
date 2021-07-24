@@ -169,6 +169,9 @@ svg, .fake-svg {
     border-radius: 30px;
 }
 
-#carousel p{
+#carousel .card p{
     color: white;
+    position: absolute;
+    top: 300px;
+    padding: 50px;
 }

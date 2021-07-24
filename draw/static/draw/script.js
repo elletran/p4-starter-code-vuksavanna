@@ -13,7 +13,7 @@ function toggleBucketList() {
  }
 
 function captureListItem() {
-    var text = document.getElementById("enter-item").value;
+    // var text = document.getElementById("enter-item").value;
     makeListItem(text);
 }
 
