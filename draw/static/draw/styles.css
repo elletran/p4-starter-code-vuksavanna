@@ -1,3 +1,12 @@
 body {
     background-color: #ffd7b6;
 }
+
+
+.text {
+font-family: 'Inter', sans-serif;
+}
+
+.title {
+font-family: 'Playfair Display', serif;
+}
