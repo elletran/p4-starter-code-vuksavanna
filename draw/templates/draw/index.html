@@ -17,8 +17,29 @@
   </style>
 </head>
 <body>
+    <p id="rcorners1">Rounded corners!</p>
+    <img src= "{% static 'draw/images/leftarrow.png' %}" style = "margin-top: 70px; margin-left: 60px; height: 80px; width: 80px;">
+    <div class = "container">
+        <div class = "row text-center"> 
+            <img src= "{% static 'draw/images/sprout-icon.png' %}" style = "margin-top: 60px; margin-left: 50px; height: 600px; width: 600px;">
+        </div>
+        <div class = "row text-center">
+            <div class = "col-12 text" style = "margin-top: 50px; color: #2f3d2e; font-size: 80px; font-weight: 600;">BRAIN BROKE</div>
+        </div>
+        <div class = "row text-center">
+            <div class = "col-12 text" style = "margin-top: 20px; color: #396935; font-size: 30px; font-weight: 500;">SAVANNA AND ELLE'S PLANT</div>
+        </div>
+        
+        <div class = "row text-center">
+            <div class = "col-12 text" style = "margin-top: 40px; color: #2f3d2e; font-size: 40px; font-weight: 500;">Date Created: July 14, 2021</div>
+        </div>
+        <div class = "row text-center">
+            <div class = "col-12 text" style = "margin-top: 20px; color: #2f3d2e; font-size: 40px; font-weight: 500;">Last Watered: One week ago</div>
+        </div>
+
+    </div>
   <!-- You may change the dimensions of this canvas -->
-  <canvas id="myCanvas" width="750px" height="750px"></canvas>
+  <!-- <canvas id="myCanvas" width="750px" height="750px"></canvas> -->
 </body>
 <script>
    var canvas = document.getElementById('myCanvas');
@@ -37,41 +58,41 @@
        sizeLarge = false;
    }
   var socket = new WebSocket(
-    'ws://' + window.location.host + '/ws/draw');
+      'ws://' + window.location.host + '/ws/draw');
 
-//Citation (reference): https://stackoverflow.com/questions/1484506/random-color-generator
- function getRandomColor(tabid) {
-  var letters = '0123456789ABCDEF';
-         var hashcolor = '#';
-         for (var i = 0; i < 6; i++) {
-             hashcolor += letters[Math.floor(tabid/10000 * 16)];
-         }
-         return hashcolor;
- }
- 
- 
-  tool.onMouseMove = function(event) { //http://paperjs.org/reference/tool/ path examples
-      path.strokeColor = getRandomColor(uid); 
-      path.add(event.point);
-
-
-      socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + "}" );
-   }
- 
-
-   socket.onmessage = function(receivedMessage) {
-       var received = JSON.parse(receivedMessage.data);
-
-       if (sizeLarge) {
-           if (!tabs.has(received.uid)) {
-               var remotePath = new paper.Path();
-               tabs.set(received.uid, remotePath);
+  //Citation (reference): https://stackoverflow.com/questions/1484506/random-color-generator
+   function getRandomColor(tabid) {
+    var letters = '0123456789ABCDEF';
+           var hashcolor = '#';
+           for (var i = 0; i < 6; i++) {
+               hashcolor += letters[Math.floor(tabid/10000 * 16)];
            }
-           
-           tabs.get(received.uid).strokeColor = getRandomColor(received.uid);
-           tabs.get(received.uid).add(new paper.Point(received.x, received.y));
-       }
+           return hashcolor;
    }
+ 
+ 
+//   tool.onMouseMove = function(event) { //http://paperjs.org/reference/tool/ path examples
+//       path.strokeColor = getRandomColor(uid); 
+//       path.add(event.point);
+      
+    
+//       socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + "}" );
+//    }
+ 
+
+//    socket.onmessage = function(receivedMessage) {
+//        var received = JSON.parse(receivedMessage.data);
+
+//        if (sizeLarge) {
+//            if (!tabs.has(received.uid)) {
+//                var remotePath = new paper.Path();
+//                tabs.set(received.uid, remotePath);
+//            }
+           
+//            tabs.get(received.uid).strokeColor = getRandomColor(received.uid);
+//            tabs.get(received.uid).add(new paper.Point(received.x, received.y));
+//        }
+//    }
  
     
    socket.onclose = function(e) {
