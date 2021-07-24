@@ -172,3 +172,23 @@ svg, .fake-svg {
 #carousel p{
     color: white;
 }
+
+/* Pill button citation: https://www.w3schools.com/cssref/pr_border.asp */
+
+.button {
+    background-color: #2f3d2e;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    width: 350px;
+    text-decoration: none;
+    align-items: center;
+    margin: 20px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+  }
+  
+  .button:hover {
+    background-color: #455744;;
+  }
