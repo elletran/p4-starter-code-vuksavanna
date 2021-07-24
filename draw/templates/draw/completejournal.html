@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>P4 Drawing</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'draw/styles.css' %}" />
+  <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
+  <script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+  <style type="text/css">
+  </style>
+</head>
+<body>
+    <a href = "../draw">
+    <svg xmlns="http://www.w3.org/2000/svg" style = "text-decoration: none; color: black; position: absolute; top: 20px; left: 50px; margin-top: 15px; border: 1px solid black; padding: 8px; width: 55px; height: 55px;"  fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+        <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
+      </svg>
+    </a>  
+    <div class = "row text-center">
+        <img src= "{% static 'draw/images/check.png' %}" style = "margin-top: 600px; margin-left: 368px; height: 260px; width: 260px;">
+        <div class = "col-12 text" style = "margin-top: 100px;font-size: 60px; font-weight: 700; color: #2f3d2e;">J O U R N A L <br> C O M P L E T E!</div>
+    </div>
+
+
+    
+  <!-- You may change the dimensions of this canvas -->
+  <!-- <canvas id="myCanvas" width="750px" height="750px"></canvas> -->
+</body>
+<script>
+   var canvas = document.getElementById('myCanvas');
+   paper.setup(canvas);
+   var tool = new paper.Tool();
+   var path = new paper.Path();
+   var uid = Date.now() % 10000;
+ 
+   // vaar clients = [];
+   var tabs = new Map(); 
+   var sizeLarge = true;
+
+   // getting the URL (you may want to use for Exercise 3)
+   var url = window.location.href;
+   if (window.location.href.includes("size=small")) {
+       sizeLarge = false;
+   }
+  var socket = new WebSocket(
+      'ws://' + window.location.host + '/ws/draw');
+
+  //Citation (reference): https://stackoverflow.com/questions/1484506/random-color-generator
+   function getRandomColor(tabid) {
+    var letters = '0123456789ABCDEF';
+           var hashcolor = '#';
+           for (var i = 0; i < 6; i++) {
+               hashcolor += letters[Math.floor(tabid/10000 * 16)];
+           }
+           return hashcolor;
+   }
+ 
+    
+   socket.onclose = function(e) {
+      console.error('Chat socket closed unexpectedly');
+  };
+</script>
+</html>
+ 
+ 
+

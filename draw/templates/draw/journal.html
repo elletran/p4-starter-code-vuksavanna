@@ -17,20 +17,23 @@
   </style>
 </head>
 <body>
-    <img src= "{% static 'draw/images/leftarrow.png' %}" style = "position: absolute; top: 15px; left: 40px; margin-top: 50px; margin-left: 10px;  mpadding: 8px; width: 70px; height: 70px;">
+    <a href = "plant">
+    <img src= "{% static 'draw/images/leftarrow.png' %}" style = "position: absolute; top: 15px; left: 40px; margin-top: 50px; margin-left: 10px;  padding: 8px; width: 70px; height: 70px;">
+  </a>
     <div class = "row text-center">
         <div class = "col-12 text" style = "margin-top: 200px; color: #2f3d2e; font-size: 65px; font-weight: 600;">FRIENDSHIP JOURNAL</div>
-    </div>
+      </div>
     <div class = "row text-center">
         <div class = "col-12 text" style = "margin-top: 20px; color: #396935; font-size: 25px; font-weight: 500;">Submit an activity reflection to grow your plant!</div>
     </div>
     <!-- text area citation: https://www.w3schools.com/tags/tag_textarea.asp -->
-    <form action="/action_page.php">
-        <textarea class = "text" style = "border: 5px solid #2f3d2e;; color: #2f3d2e; padding: 40px; font-size: 30px; background-color: rgb(239, 255, 221); margin-top: 70px; width: 700px; height: 1000px; color: rgb(43, 43, 43)" id="w3review" name="w3review" rows="4" cols="50">
+    <form action="completejournal">
+        <textarea class = "text" style = "margin-left: 140px; border: 5px solid #2f3d2e;; color: #2f3d2e; padding: 40px; font-size: 30px; background-color: rgb(239, 255, 221); margin-top: 70px; width: 700px; height: 1000px; color: rgb(43, 43, 43)" id="w3review" name="w3review" rows="4" cols="50">
 Type your reflection...
             </textarea>
           <br><br>
-          <input style = "font-weight: 600; margin-top: 60px; width: 700px; height: 60px; font-size: 30px; color: white; background-color: #2f3d2e" class = "text" type="submit" value="SUBMIT">
+          <input onclick = "location.href = 'completejournal'" style = "margin-left: 140px; font-weight: 600; margin-top: 30px; width: 700px; height: 70px; font-size: 30px; color: white; background-color: #2f3d2e" class = "text" type="submit" value="SUBMIT">
+
         </form>
     </div>
 

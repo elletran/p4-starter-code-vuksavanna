@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>P4 Drawing</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'draw/styles.css' %}" />
+  <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
+  <script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+  <style type="text/css">
+  </style>
+</head>
+<body>
+    <div class = "row text-center">
+        <div class = "col-12 text" style = "margin-top: 250px;font-size: 60px; font-weight: 700; color: #2f3d2e;">G R O W I N G</div>
+        <div class = "col-12 title" style = "font-size: 60px; font-weight: 700; color: #2f3d2e;">friendships</div>
+        <div class = "col-4"></div>
+        <a href = "kiosk">
+        <button style = "font-family: 'Inter', sans-serif; width: 490px;" class="button col-8">C H E C K‎‏‏‎ ‎‏‏‎ ‎‏‏‎ ‎I N</button>
+        </a>
+    </div>
+
+
+    
+  <!-- You may change the dimensions of this canvas -->
+  <!-- <canvas id="myCanvas" width="750px" height="750px"></canvas> -->
+</body>
+<script>
+   var canvas = document.getElementById('myCanvas');
+   paper.setup(canvas);
+   var tool = new paper.Tool();
+   var path = new paper.Path();
+   var uid = Date.now() % 10000;
+ 
+   // vaar clients = [];
+   var tabs = new Map(); 
+   var sizeLarge = true;
+
+   // getting the URL (you may want to use for Exercise 3)
+   var url = window.location.href;
+   if (window.location.href.includes("size=small")) {
+       sizeLarge = false;
+   }
+  var socket = new WebSocket(
+      'ws://' + window.location.host + '/ws/draw');
+
+  //Citation (reference): https://stackoverflow.com/questions/1484506/random-color-generator
+   function getRandomColor(tabid) {
+    var letters = '0123456789ABCDEF';
+           var hashcolor = '#';
+           for (var i = 0; i < 6; i++) {
+               hashcolor += letters[Math.floor(tabid/10000 * 16)];
+           }
+           return hashcolor;
+   }
+ 
+    
+   socket.onclose = function(e) {
+      console.error('Chat socket closed unexpectedly');
+  };
+</script>
+</html>
+ 
+ 
+
