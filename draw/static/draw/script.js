@@ -80,7 +80,7 @@ function makeListItem(textInput) {
     div.appendChild(p);
 
     // list.appendChild(div);
-    list.insertBefore(div, list.childNodes[4]);
+    list.insertBefore(div, list.childNodes[6]);
 }
 
 // function moveListItems() {
