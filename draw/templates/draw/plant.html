@@ -39,17 +39,17 @@
             </div>
 
             <div class="row">
-                <!-- <div id="bucket-list" class="cover closed"> -->
-                    <div id="bucket-list" class="open">
+                <div id="bucket-list" class="cover closed">
+                    <!-- <div id="bucket-list" class="open"> -->
                     <div class="container" onClick="toggleBucketList()">
                         <p class="text text-center"> Bucket List </p>
                     </div>
-                    <!-- <div id= "scrollable" class="invisible"> -->
-                    <div id= "scrollable">
+                    <div id= "scrollable" class="invisible">
+                    <!-- <div id= "scrollable"> -->
                         <div class="list-item-add">
                             <img class="fake-svg" src= "{% static 'draw/images/plus-square.svg' %}" onClick="captureListItem()">
                             <!-- <form> -->
-                                <input id="enter-item" type="text" placeholder="Let's do somehing new!">
+                                <input id="enter-item" type="text" placeholder="Let's do something new!">
                             <!-- </form> -->
                         </div>
                         <div id="carousel">
@@ -88,7 +88,7 @@
                             <a href="journal">
                                 <img id="item-0" class="fake-svg" src= "{% static 'draw/images/square.svg' %}" onClick="checkOff(this.id)">
                             </a>
-                            <p>BAMFA</p>
+                            <p>BAMPFA</p>
                         </div>
                         <div class="list-item">
                             <img class="fake-svg invisible" src= "{% static 'draw/images/check-square-fill.svg' %}">

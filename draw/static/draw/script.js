@@ -2,7 +2,7 @@ function toggleBucketList() {
     var bucketBox = document.getElementById("bucket-list");
 
     bucketBox.classList.toggle('cover');
-    bucketBox.children[1].classList.toggle('hidden');    
+    bucketBox.children[1].classList.toggle('invisible');    
 
     bucketBox.classList.toggle('closed');
     bucketBox.classList.toggle('open');
