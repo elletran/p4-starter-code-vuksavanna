@@ -6,8 +6,10 @@
   <title>P4 Drawing</title>
   <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'draw/styles.css' %}" />
-  <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
+  <!-- <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script> -->
+  <script src="{% static 'draw/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'draw/vendors/jquery-ui/jquery-ui.min.js' %}"></script>
   <script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
