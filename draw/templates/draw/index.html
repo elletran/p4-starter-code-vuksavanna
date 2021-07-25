@@ -5,66 +5,112 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>P4 Drawing</title>
   <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'draw/styles.css' %}" />
   <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
   <script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
+
   <style type="text/css">
   </style>
 </head>
 <body>
+    <div class = "row text-center">
+        <div class = "col-12 text" style = "margin-top: 90px; color: #2f3d2e; font-size: 65px; font-weight: 600;">FRIENDSHIP PLANTS</div>
+    </div>
+    <div class = "row text-center">
+        <div class = "col-12 text" style = "margin-top: 20px; color: #396935; font-size: 25px; font-weight: 500;">Complete bucketlist activities to grow your friendship plants!</div>
+    </div>
+    <div style = "height: 130px;"></div>
+    <div class = "row text-center" style = "padding-left: 32px; padding-right: 32px;">
+        <div class = "col-6">
+            <a href = "plant">
+                <img class = "row text-center" src= "{% static 'draw/images/seedling.png' %}">
+            </a>
+            <div style = "margin-top: 10px; color: #2f3d2e; font-size: 40px; font-weight: 600;">JADE</div>
+        </div>
+        <div class = "col-6">
+            <img class = "row text-center" src= "{% static 'draw/images/sprout.png' %}">
+            <div style = "margin-top: 10px; color: #2f3d2e; font-size: 40px; font-weight: 600;">BUD</div>
+        </div>
+    </div>
+
+    <div class = "row text-center" style = "padding-left: 30px; padding-right: 30px;">
+        <div class = "col-6">
+            <img class = "row text-center" src= "{% static 'draw/images/sprout.png' %}">
+            <div style = "margin-top: 10px; color: #2f3d2e; font-size: 40px; font-weight: 600;">VERA</div>
+        </div>
+        <div class = "col-6">
+            <img class = "row text-center" src= "{% static 'draw/images/sappling.png' %}">
+            <div style = "margin-top: 10px; color: #2f3d2e; font-size: 40px; font-weight: 600;">LEAFY</div>
+        </div>
+    </div>
+
+    
   <!-- You may change the dimensions of this canvas -->
-  <canvas id="myCanvas" width="750px" height="750px"></canvas>
+  <!-- <canvas id="myCanvas" width="750px" height="750px"></canvas> -->
 </body>
 <script>
-    console.log('hi');
-    var uid = Date.now() % 10000;
-    var tabs = []; 
-    var kioskConnect = false;
-    var submit = document.getElementById('input');
-  
-    // getting the URL (you may want to use for Exercise 3)
-  
-    var url = window.location.href;
-    if (window.location.href.includes("kiosk")) {
-        kioskConnect = true;
-    }
-   var socket = new WebSocket(
-       'ws://' + window.location.host + '/ws/draw');
-  
-//    submit.onclick = function() {
-//     tabs.push(uid.toString());
-//     socket.send("{\"uid\" : " + uid + "}");
-//    }
-  
-  //  tool.onMouseMove = function(event) { //http://paperjs.org/reference/tool/ path examples
-  //      path.strokeColor = getRandomColor(uid); 
-  //      path.add(event.point);
-      
-  //      socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + "}" );
-  //   }
-  
-  
-    socket.onmessage = function(receivedMessage) {
-           if (kioskConnect) {
-             if (tabs.length == 2) {
-              $(".growingplant").empty().append('<div>hi</div>');
-             }
+   var canvas = document.getElementById('myCanvas');
+   paper.setup(canvas);
+   var tool = new paper.Tool();
+   var path = new paper.Path();
+   var uid = Date.now() % 10000;
+ 
+   // vaar clients = [];
+   var tabs = new Map(); 
+   var sizeLarge = true;
+
+   // getting the URL (you may want to use for Exercise 3)
+   var url = window.location.href;
+   if (window.location.href.includes("size=small")) {
+       sizeLarge = false;
+   }
+  var socket = new WebSocket(
+      'ws://' + window.location.host + '/ws/draw');
+
+  //Citation (reference): https://stackoverflow.com/questions/1484506/random-color-generator
+   function getRandomColor(tabid) {
+    var letters = '0123456789ABCDEF';
+           var hashcolor = '#';
+           for (var i = 0; i < 6; i++) {
+               hashcolor += letters[Math.floor(tabid/10000 * 16)];
            }
-        // var received = JSON.parse(receivedMessage.data);
-        // if (sizeLarge) {
-        //     if (!tabs.has(received.uid)) {
-        //         var remotePath = new paper.Path();
-        //         tabs.set(received.uid, remotePath);
-        //     }
-            
-        //     tabs.get(received.uid).strokeColor = getRandomColor(received.uid);
-        //     tabs.get(received.uid).add(new paper.Point(received.x, received.y));
-        // }
-    }
-  
-     
-    socket.onclose = function(e) {
-       console.error('Chat socket closed unexpectedly');
-   };
-  </script>
+           return hashcolor;
+   }
+ 
+ 
+//   tool.onMouseMove = function(event) { //http://paperjs.org/reference/tool/ path examples
+//       path.strokeColor = getRandomColor(uid); 
+//       path.add(event.point);
+      
+    
+//       socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + "}" );
+//    }
+ 
+
+//    socket.onmessage = function(receivedMessage) {
+//        var received = JSON.parse(receivedMessage.data);
+
+//        if (sizeLarge) {
+//            if (!tabs.has(received.uid)) {
+//                var remotePath = new paper.Path();
+//                tabs.set(received.uid, remotePath);
+//            }
+           
+//            tabs.get(received.uid).strokeColor = getRandomColor(received.uid);
+//            tabs.get(received.uid).add(new paper.Point(received.x, received.y));
+//        }
+//    }
+ 
+    
+   socket.onclose = function(e) {
+      console.error('Chat socket closed unexpectedly');
+  };
+</script>
 </html>
+ 
+ 
+
