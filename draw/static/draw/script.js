@@ -12,6 +12,18 @@ function toggleBucketList() {
     // }
  }
 
+// let listItem = document.getElementsByClassName('fake-svg');
+
+// listItem.onclick = checkOff(this.id);
+
+function checkOff(item) {
+	let listItem = document.getElementById(item);
+	let parent = listItem.parentNode;
+
+	parent.children[0].classList.toggle('invisible');
+	parent.children[1].classList.toggle('invisible');
+}
+
 function captureListItem() {
     var text = document.getElementById("enter-item").value;
     makeListItem(text);
@@ -23,6 +35,7 @@ function carouselSuggest(imgId) {
 
 	makeListItem(parent.children[1].innerHTML);
 }
+var itemsListed = 4;
 
 function makeListItem(textInput) {
 // function makeListItem() {
@@ -30,19 +43,40 @@ function makeListItem(textInput) {
 
     var div = document.createElement("div");
     var p = document.createElement("p");
-    var svg = document.createElement("img");
+	var a = document.createElement("a");
+    var svg1 = document.createElement("img");
+	var svg2 = document.createElement("img");
 
-    svg.src = '/static/draw/images/square.svg'
+    svg1.src = '/static/draw/images/square.svg';
+	svg2.src = '/static/draw/images/check-square-fill.svg';
     // var svg = {
     //     filePath: '/static/draw/images/square.svg'
     // }
     var textNode = document.createTextNode(String(textInput));
 
+	var id = "item-" + String(itemsListed);
+
     div.classList.toggle("list-item");
-    svg.classList.toggle("fake-svg");
+    svg1.classList.toggle("fake-svg");
+	svg1.id = id;
+	
+	a.setAttribute("href", "journal");
+	svg1.setAttribute("onclick", "checkOff(this.id)");
+
+	itemsListed++;
+	svg2.classList.toggle("fake-svg");
+	svg2.classList.toggle("invisible");
+
+	
+
+	// svg1.addEventListener("click", checkOff(id));
+
+	// add event handler???
 
     p.appendChild(textNode);
-    div.appendChild(svg);
+	a.appendChild(svg1);
+	div.appendChild(svg2);
+    div.appendChild(a);
     div.appendChild(p);
 
     // list.appendChild(div);

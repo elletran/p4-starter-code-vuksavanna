@@ -39,6 +39,8 @@ input {
 
 #bucket-list .text {
     font-size: 80px;
+    color: #396935;
+    font-weight: 700;
 }
 
 .text{
@@ -106,7 +108,13 @@ font-family: 'Playfair Display', serif;
 .list-item p, .list-item-add p, input {
     padding: 15px;
     font-size: 50px;
+    color: #396935;
+    font-weight: 600;
 }
+
+/* .fake-svg {
+    color: #396935;
+} */
 
 svg, .fake-svg {
     width: 50px; 
@@ -125,14 +133,6 @@ svg, .fake-svg {
     width: 720px;
 }
 
-    /* display:flex;
-    flex-direction: column;
-    align-items: center; */
-    /* overflow: hidden; */
-    
-    /* height: 500px; */
-    /* justify-content: flex-end; */
-
 .invisible {
     display: none;
 }
@@ -146,13 +146,6 @@ svg, .fake-svg {
     height: 1250px;
     overflow:auto;
 }
-
-
-/* .flex-col {
-    display: flex;
-    flex-direction: column;
-
-} */
 
 .list-item, .list-item-add {
     display: flex;
