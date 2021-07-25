@@ -13,6 +13,9 @@ def kiosk(request):
 def plant(request):
     return render(request, 'draw/plant.html')
 
+def plantalt(request):
+    return render(request, 'draw/plantalt.html')
+
 def checkin(request):
     return render(request, 'draw/checkin.html')
 

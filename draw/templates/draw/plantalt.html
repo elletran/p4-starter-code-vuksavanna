@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>P4 Drawing</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'draw/styles.css' %}" />
+  <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
+  <script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&display=swap" rel="stylesheet"> -->
+
+  <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@700&family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&amp;family=Catamaran:wght@700&amp;family=DM+Serif+Text&amp;display=swap" rel="stylesheet"> -->
+</head>
+<body>
+    <a href="../draw">
+        <img src= "{% static 'draw/images/leftarrow.png' %}" style = "margin-top: 70px; margin-left: 60px; height: 80px; width: 80px;">
+    </a>
+    
+    <div class = "container">
+        <div class="flex-col">
+            <div class = "row text-center"> 
+                <img src= "{% static 'draw/images/sprout.png' %}" style = "margin-top: 60px; margin-left: 50px; height: 600px; width: 600px;">
+            </div>
+            <div class = "row text-center">
+                <div class = "col-12 text plant-name">JADE</div>
+            </div>
+            <div class = "row text-center plant-owners">
+                <div class = "col-12 text">SAVANNA AND ELLE'S PLANT</div>
+            </div>
+            
+            <div class = "row text-center info-text">
+                <div class = "col-12 text">Date Created: July 14, 2021</div>
+            </div>
+            <div class = "row text-center info-text">
+                <div class = "col-12 text">Last Watered: One week ago</div>
+            </div>
+
+            <div class="row">
+                <div id="bucket-list" class="cover closed">
+                    <!-- <div id="bucket-list" class="open"> -->
+                    <div class="container" onClick="toggleBucketList()">
+                        <p class="text text-center"> Bucket List </p>
+                    </div>
+                    <div id= "scrollable" class="invisible">
+                    <!-- <div id= "scrollable"> -->
+                        <div class="list-item-add">
+                            <img class="fake-svg" src= "{% static 'draw/images/plus-square.svg' %}" onClick="captureListItem()">
+                            <!-- <form> -->
+                                <input id="enter-item" type="text" placeholder="Let's do something new!">
+                            <!-- </form> -->
+                        </div>
+                        <div class="list-item">
+                            <img class="fake-svg invisible" src= "{% static 'draw/images/check-square-fill.svg' %}">
+                            <a href="journal">
+                                <img id="item-0" class="fake-svg" src= "{% static 'draw/images/square.svg' %}" onClick="checkOff(this.id)">
+                            </a>
+                            <p>BAMPFA</p>
+                        </div>
+                        <div class="list-item">
+                            <img class="fake-svg invisible" src= "{% static 'draw/images/check-square-fill.svg' %}">
+                            <a href="journal">
+                                <img id="item-1" class="fake-svg" src= "{% static 'draw/images/square.svg' %}" onClick="checkOff(this.id)">
+                            </a>
+                            <p>Round 1</p>
+                        </div>
+                        <div class="list-item">
+                            <img class="fake-svg invisible" src= "{% static 'draw/images/check-square-fill.svg' %}">
+                            <a href="journal">
+                                <img id="item-2" class="fake-svg" src= "{% static 'draw/images/square.svg' %}" onClick="checkOff(this.id)">
+                            </a>
+                            <p>Millet Crepe</p>
+                        </div>
+                        <div class="list-item">
+                            <img class="fake-svg invisible" src= "{% static 'draw/images/check-square-fill.svg' %}">
+                            <a href="journal">
+                                <img id="item-3" class="fake-svg" src= "{% static 'draw/images/square.svg' %}" onClick="checkOff(this.id)">
+                            </a>
+                            <p>Taco Bell</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+  <script type="text/javascript" src="{% static 'draw/script-ver2.js' %}"></script>
+</body>
+</html>
+ 
+ 
+
