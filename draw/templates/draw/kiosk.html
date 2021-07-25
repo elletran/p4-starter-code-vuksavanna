@@ -27,8 +27,8 @@
             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
           </svg>
     </div>
-    <div class = "flexcenter" style = "width: 500px; height: 500px;"> 
-        <img style = "margin-left: 460px; margin-top: 80px" class = "col-12" src= "{% static 'draw/images/monstera.png' %}">
+    <div class = "growingplant text-center" style = "width: 500px; height: 500px;"> 
+        <img style = "margin-left: 240px; margin-top: 80px" class = "col-12" src= "{% static 'draw/images/monstera.png' %}">
     </div>
     <div class = "row text-center">
         <div class = "col-12 text" style = "margin-top: 45px; color: #2f3d2e; font-size: 70px; font-weight: 600;">JADE</div>
@@ -40,59 +40,34 @@
   <!-- <canvas id="myCanvas" width="750px" height="750px"></canvas> -->
 </body>
 <script>
-   var canvas = document.getElementById('myCanvas');
-   paper.setup(canvas);
-   var tool = new paper.Tool();
-   var path = new paper.Path();
    var uid = Date.now() % 10000;
- 
-   // vaar clients = [];
+   var kioskConnect = false; 
    var tabs = new Map(); 
    var sizeLarge = true;
+   var clicks = [];
+   var socket = new WebSocket(
+      'ws://' + window.location.host + '/ws/draw');
+
 
    // getting the URL (you may want to use for Exercise 3)
    var url = window.location.href;
-   if (window.location.href.includes("size=small")) {
-       sizeLarge = false;
-   }
-  var socket = new WebSocket(
-      'ws://' + window.location.host + '/ws/draw');
+   if (window.location.href.includes("kiosk")) {
+      kioskConnect = true;
+  }
 
-  //Citation (reference): https://stackoverflow.com/questions/1484506/random-color-generator
-   function getRandomColor(tabid) {
-    var letters = '0123456789ABCDEF';
-           var hashcolor = '#';
-           for (var i = 0; i < 6; i++) {
-               hashcolor += letters[Math.floor(tabid/10000 * 16)];
+  socket.onmessage = function(receivedMessage) {
+        var received = JSON.parse(receivedMessage.data);
+        clicks.push(received);
+         if (kioskConnect) {
+             console.log("adding");
+           if (clicks.length == 2) {
+            console.log("added");
+            $(".growingplant").empty().append('<img style = "margin-left: 240px; margin-top: 80px" class = "col-12" src= "{% static "draw/images/snake-plant.png" %}">');
            }
-           return hashcolor;
-   }
- 
- 
-//   tool.onMouseMove = function(event) { //http://paperjs.org/reference/tool/ path examples
-//       path.strokeColor = getRandomColor(uid); 
-//       path.add(event.point);
-      
-    
-//       socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + "}" );
-//    }
- 
+         }
+  }
 
-//    socket.onmessage = function(receivedMessage) {
-//        var received = JSON.parse(receivedMessage.data);
 
-//        if (sizeLarge) {
-//            if (!tabs.has(received.uid)) {
-//                var remotePath = new paper.Path();
-//                tabs.set(received.uid, remotePath);
-//            }
-           
-//            tabs.get(received.uid).strokeColor = getRandomColor(received.uid);
-//            tabs.get(received.uid).add(new paper.Point(received.x, received.y));
-//        }
-//    }
- 
-    
    socket.onclose = function(e) {
       console.error('Chat socket closed unexpectedly');
   };

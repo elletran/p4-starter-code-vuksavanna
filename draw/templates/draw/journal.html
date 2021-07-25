@@ -1,21 +1,20 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>P4 Drawing</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'draw/styles.css' %}" />
-  <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
-  <script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
-
-  <style type="text/css">
-  </style>
-</head>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>P4 Drawing</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'draw/styles.css' %}" />
+    <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+    <script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
+  
+    <style type="text/css">
+    </style>
+  </head>
 <body>
     <a href = "plant">
     <img src= "{% static 'draw/images/leftarrow.png' %}" style = "position: absolute; top: 15px; left: 40px; margin-top: 50px; margin-left: 10px;  padding: 8px; width: 70px; height: 70px;">
@@ -27,14 +26,12 @@
         <div class = "col-12 text" style = "margin-top: 20px; color: #396935; font-size: 25px; font-weight: 500;">Submit an activity reflection to grow your plant!</div>
     </div>
     <!-- text area citation: https://www.w3schools.com/tags/tag_textarea.asp -->
-    <form action="completejournal">
         <textarea class = "text" style = "margin-left: 140px; border: 5px solid #2f3d2e;; color: #2f3d2e; padding: 40px; font-size: 30px; background-color: rgb(239, 255, 221); margin-top: 70px; width: 700px; height: 1000px; color: rgb(43, 43, 43)" id="w3review" name="w3review" rows="4" cols="50">
 Type your reflection...
             </textarea>
           <br><br>
-          <input onclick = "location.href = 'completejournal'" style = "margin-left: 140px; font-weight: 600; margin-top: 30px; width: 700px; height: 70px; font-size: 30px; color: white; background-color: #2f3d2e" class = "text" type="submit" value="SUBMIT">
+          <button id = "input" style = "margin-left: 140px; font-weight: 600; margin-top: 30px; width: 700px; height: 70px; font-size: 30px; color: white; background-color: #2f3d2e" class = "text" type="submit" value="SUBMIT">SUBMIT </button>
 
-        </form>
     </div>
 
     
@@ -42,62 +39,24 @@ Type your reflection...
   <!-- <canvas id="myCanvas" width="750px" height="750px"></canvas> -->
 </body>
 <script>
-   var canvas = document.getElementById('myCanvas');
-   paper.setup(canvas);
-   var tool = new paper.Tool();
-   var path = new paper.Path();
-   var uid = Date.now() % 10000;
- 
-   // vaar clients = [];
-   var tabs = new Map(); 
-   var sizeLarge = true;
-
-   // getting the URL (you may want to use for Exercise 3)
-   var url = window.location.href;
-   if (window.location.href.includes("size=small")) {
-       sizeLarge = false;
-   }
+  var uid = Date.now() % 10000;
+  var submit = document.getElementById('input');
   var socket = new WebSocket(
-      'ws://' + window.location.host + '/ws/draw');
+     'ws://' + window.location.host + '/ws/draw');
 
-  //Citation (reference): https://stackoverflow.com/questions/1484506/random-color-generator
-   function getRandomColor(tabid) {
-    var letters = '0123456789ABCDEF';
-           var hashcolor = '#';
-           for (var i = 0; i < 6; i++) {
-               hashcolor += letters[Math.floor(tabid/10000 * 16)];
-           }
-           return hashcolor;
-   }
- 
- 
-//   tool.onMouseMove = function(event) { //http://paperjs.org/reference/tool/ path examples
-//       path.strokeColor = getRandomColor(uid); 
-//       path.add(event.point);
-      
-    
-//       socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + "}" );
-//    }
- 
+  // getting the URL (you may want to use for Exercise 3)
 
-//    socket.onmessage = function(receivedMessage) {
-//        var received = JSON.parse(receivedMessage.data);
+  var url = window.location.href;
 
-//        if (sizeLarge) {
-//            if (!tabs.has(received.uid)) {
-//                var remotePath = new paper.Path();
-//                tabs.set(received.uid, remotePath);
-//            }
-           
-//            tabs.get(received.uid).strokeColor = getRandomColor(received.uid);
-//            tabs.get(received.uid).add(new paper.Point(received.x, received.y));
-//        }
-//    }
- 
-    
-   socket.onclose = function(e) {
-      console.error('Chat socket closed unexpectedly');
-  };
+  submit.onclick = function() {
+  socket.send("{\"uid\" : " + uid + "}");  
+  console.log("clicked");
+ }
+  
+   
+  socket.onclose = function(e) {
+     console.error('Chat socket closed unexpectedly');
+ };
 </script>
 </html>
  
